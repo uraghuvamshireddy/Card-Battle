@@ -10,6 +10,10 @@ const LandingPage = () => {
     navigate("/battle", { state: { player1, player2 } });
   };
 
+  const rulesPage=()=>{
+    navigate("/rules")
+  }
+
   return (
     <div className="landing-page">
       <h1 className="title">⚔️ CARD BATTLE ⚔️</h1>
@@ -27,6 +31,7 @@ const LandingPage = () => {
           placeholder="Player 2 Name (leave empty for AI)"
         />
         <button className="start-btn" onClick={startGame}>Start Game</button>
+        <button className="rules-btn" onClick={rulesPage}>Rules</button>
       </div>
     </div>
   );

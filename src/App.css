@@ -26,7 +26,7 @@ input {
   
 }
 
-.start-btn, .attack-btn, .restart-btn {
+.start-btn, .attack-btn, .restart-btn,.rules-btn {
   padding: 0.7rem 1.5rem;
   font-size: 1rem;
   border: none;
@@ -314,4 +314,54 @@ body {
   .card-slot { width: 50px; height: 75px; }
   .hp-bar-wrapper { width: 120px; height: 18px; }
   .damage-card { width: 70px; height: 70px; font-size: 1rem; }
+}
+
+.rules-container {
+  max-width: 800px;
+  margin: auto;
+  padding: 2rem;
+  color: white;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  border-radius: 16px;
+  box-shadow: 0 0 20px rgba(0,0,0,0.6);
+}
+
+.rules-title {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  color: #ffc371;
+}
+
+.rules-content h2 {
+  font-size: 1.5rem;
+  margin-top: 1.5rem;
+  color: #ffb400;
+}
+
+.rules-content ul {
+  list-style-type: disc;
+  margin-left: 1.5rem;
+  margin-top: 0.5rem;
+}
+
+.rules-content li {
+  margin-bottom: 0.5rem;
+  font-size: 1rem;
+}
+
+@media screen and (max-width: 600px) {
+  .rules-container {
+    padding: 1rem;
+  }
+  .rules-title {
+    font-size: 2rem;
+  }
+  .rules-content h2 {
+    font-size: 1.25rem;
+  }
+  .rules-content li {
+    font-size: 0.95rem;
+  }
 }
