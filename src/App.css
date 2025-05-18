@@ -41,214 +41,247 @@ input {
   transform: scale(1.1);
 }
 
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background: linear-gradient(135deg, #1a1a2e, #16213e);
+  color: #ffffff;
+}
+
 .game-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 90vh;
-  padding: 1rem 3rem;
-  background: linear-gradient(135deg, #222, #444);
-  color: white;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  position: relative;
+  height: 100vh;
+  padding: 1rem;
+  box-sizing: border-box;
 }
+
+.history-panel {
+  width: 100px;
+  height: 90%;
+  background: #0f3460;
+  border-radius: 10px;
+  padding: 0.5rem;
+  box-shadow: inset 0 0 10px #000;
+  display: flex;
+  flex-direction: column-reverse;
+  gap: 0.5rem;
+  overflow-y: auto;
+}
+.history-panel.left { order: 0; }
+.history-panel.right { order: 2; }
+.history-card {
+  width: 100%;
+  height: 60px;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  color: #fff;
+  box-shadow: 0 0 5px #000;
+}
+.history-card.red { background: #ff4e50; }
+.history-card.blue { background: #009ffd; }
 
 .player-area {
   display: flex;
-  align-items: center;
-  gap: 3rem;
   flex: 1;
-  justify-content: center;
+  justify-content: space-around;
+  align-items: center;
   position: relative;
+  order: 1;
 }
 
-/* Player panels */
-.player {
-  background: #333;
-  border-radius: 10px;
-  padding: 1rem 1.5rem;
-  width: 200px;
+.player-panel {
+  background: #1e2022;
+  padding: 1rem;
+  border-radius: 12px;
+  width: 220px;
   display: flex;
   flex-direction: column;
   align-items: center;
-  box-shadow: 0 0 10px #000;
-  position: relative;
-  z-index: 1;
+  box-shadow: 0 0 15px rgba(0,0,0,0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.player-panel.active {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px #ffb400;
+}
+.player-panel h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
 
-.player h2 {
-  margin-bottom: 0.8rem;
-}
-
-/* Player cards */
 .card-slot {
   width: 80px;
   height: 120px;
-  perspective: 1000px;
+  perspective: 800px;
+  transform-style: preserve-3d;
   margin-bottom: 1rem;
-}
-
-.player-card {
-  width: 80px;
-  height: 120px;
-  border-radius: 8px;
-  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-  object-fit: cover;
-}
-
-/* HP Bar */
-.hp-bar-wrapper {
   position: relative;
-  width: 150px;
-  height: 25px;
-  background: #555;
-  border-radius: 15px;
-  overflow: hidden;
-  box-shadow: inset 0 0 10px #000;
 }
+.card-slot.clickable { cursor: pointer; }
 
-.hp-bar {
-  background: linear-gradient(90deg, #ff4d4d, #ff1a1a);
-  height: 100%;
-  transition: width 0.7s ease-in-out;
-  border-radius: 15px 0 0 15px;
-}
-
-.hp-text {
-  position: absolute;
+.card-face {
   width: 100%;
-  text-align: center;
-  font-weight: bold;
-  top: 2px;
-  color: #fff;
-  text-shadow: 0 0 5px black;
-}
-
-/* Battle area */
-.battle-area {
-  position: relative;
-  width: 160px;
-  height: 140px;
+  height: 100%;
+  border-radius: 8px;
+  position: absolute;
+  backface-visibility: hidden;
+  transform-style: preserve-3d;
   display: flex;
   justify-content: center;
   align-items: center;
-}
-
-.attack-btn {
-  padding: 1rem 1.8rem;
-  font-size: 1.1rem;
+  font-size: 1.2rem;
   font-weight: bold;
-  border-radius: 10px;
-  background: linear-gradient(45deg, #ff5555, #ff2222);
-  border: none;
-  color: white;
-  cursor: pointer;
-  box-shadow: 0 0 10px #ff2222;
-  transition: background 0.3s ease;
+  box-shadow: 0 0 8px rgba(0,0,0,0.7);
+  transition: transform 0.6s;
 }
 
-.attack-btn:disabled {
-  background: #999;
-  cursor: not-allowed;
-  box-shadow: none;
+.player-panel.p1 .card-face.front {
+  background: linear-gradient(135deg, #ff5f6d, #ffc371);
+  transform: rotateY(0deg);
+}
+.player-panel.p2 .card-face.front {
+  background: linear-gradient(135deg, #2193b0, #6dd5ed);
+  transform: rotateY(0deg);
 }
 
-.attack-btn:hover:not(:disabled) {
-  background: linear-gradient(45deg, #ff8888, #ff5555);
+.player-panel.p1 .card-face.back {
+  background: linear-gradient(135deg, #ff9966, #ff5e62);
+  transform: rotateY(180deg);
+}
+.player-panel.p2 .card-face.back {
+  background: linear-gradient(135deg, #89f7fe, #66a6ff);
+  transform: rotateY(180deg);
 }
 
-/* Card History */
-.card-history {
-  width: 90px;
+.card-slot.flipped .front {
+  transform: rotateY(180deg);
+}
+.card-slot.flipped .back {
+  transform: rotateY(0deg);
+}
+
+.hp-bar-wrapper {
+  position: relative;
+  width: 180px;
+  height: 24px;
+  background: #333;
+  border-radius: 12px;
+  overflow: hidden;
+  margin-top: 0.5rem;
+}
+.hp-bar {
+  height: 100%;
+  transition: width 0.7s ease-in-out;
+  background: linear-gradient(135deg, #56ab2f, #a8e063);
+}
+.hp-text {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
   height: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 10px;
-  overflow-y: auto;
-  padding: 0.5rem 0;
-  background: #222;
-  border-radius: 10px;
-  box-shadow: inset 0 0 10px #000;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  text-shadow: 0 0 5px #000;
 }
 
-.card-history.left {
-  order: 0;
-}
-
-.card-history.right {
-  order: 2;
-}
-
-.history-card {
+.card-slot {
   width: 80px;
   height: 120px;
+  perspective: 800px;
+  margin-bottom: 1rem;
+  position: relative;
+}
+.card-slot.clickable { cursor: pointer; }
+
+.card-inner {
+  position: relative; 
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  transition: transform 0.6s; 
+  transform-style: preserve-3d; 
   border-radius: 8px;
-  object-fit: cover;
-  box-shadow: 0 0 10px #444;
-  opacity: 0.8;
 }
 
-/* Damage Card and Animation */
+.card-slot.flipped .card-inner {
+  transform: rotateY(180deg);
+}
+
+
+.card-face {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: 8px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  box-shadow: 0 0 8px rgba(0,0,0,0.7);
+}
+.card-face.front {
+  background: linear-gradient(135deg, #ff5f6d, #ffc371); 
+  transform: rotateY(0deg); 
+}
+
+.card-face.back {
+  background: linear-gradient(135deg, #ff9966, #ff5e62); 
+  transform: rotateY(180deg); 
+  color: white; 
+  text-shadow: 0 0 5px #000; 
+}
+
+
+.arena-center {
+  position: relative;
+  width: 160px;
+  height: 160px;
+  z-index: 5;
+}
 .damage-card {
   position: absolute;
-  width: 80px;
-  height: 120px;
-  border-radius: 8px;
-  background: radial-gradient(circle, #ff4444 30%, transparent 70%);
-  color: white;
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.4rem;
   font-weight: bold;
-  font-size: 1.3rem;
-  text-align: center;
-  line-height: 120px;
-  box-shadow: 0 0 15px #ff5555;
-  pointer-events: none;
+  color: #fff;
+  text-shadow: 0 0 8px #000;
   z-index: 10;
-  user-select: none;
+  opacity: 1; 
 }
-
-.damage-number {
-  font-weight: 900;
-  font-size: 1.5rem;
-  text-shadow:
-    0 0 8px #ff0000,
-    0 0 20px #ff4500,
-    0 0 30px #ff8c00;
+.damage-card.fly-from-player1 {
+  background: radial-gradient(circle, #ff5f6d 40%, transparent 60%);
+  left: -60px; 
+  top: 30px; 
+  animation: flyFromLeft 1.2s ease-out forwards;
 }
-
-/* Animation from Player1 to center */
-.animate-from-player1 {
-  animation: flyFromLeft 1.5s ease forwards;
-  left: calc(25% + 50px);
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-/* Animation from Player2 to center */
-.animate-from-player2 {
-  animation: flyFromRight 1.5s ease forwards;
-  right: calc(25% + 50px);
-  top: 50%;
-  transform: translateY(-50%);
+.damage-card.fly-from-player2 {
+  background: radial-gradient(circle, #2193b0 40%, transparent 60%);
+  right: -60px;
+  top: 30px; 
+  animation: flyFromRight 1.2s ease-out forwards;
 }
 
 @keyframes flyFromLeft {
-  0% {
-    opacity: 1;
-    transform: translate(0, -50%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(calc(50vw - 50%), -50%);
-  }
+  0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translateX(calc(100vw / 2 - 40px - (-60px))) translateY(-20px) scale(0.8); opacity: 0; } 
 }
 
 @keyframes flyFromRight {
-  0% {
-    opacity: 1;
-    transform: translate(0, -50%);
-  }
-  100% {
-    opacity: 1;
-    transform: translate(calc(-50vw + 50%), -50%);
-  }
+   0% { transform: translate(0, 0) scale(1); opacity: 1; }
+  100% { transform: translateX(calc(-100vw / 2 + 40px + (-60px))) translateY(-20px) scale(0.8); opacity: 0; } 
 }
+
