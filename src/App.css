@@ -265,13 +265,13 @@ body {
   background: radial-gradient(circle, #ff5f6d 40%, transparent 60%);
   left: -60px; 
   top: 30px; 
-  animation: flyFromLeft 1.2s ease-out forwards;
+  animation: flyFromLeft 2.5s ease-out forwards;
 }
 .damage-card.fly-from-player2 {
   background: radial-gradient(circle, #2193b0 40%, transparent 60%);
   right: -60px;
   top: 30px; 
-  animation: flyFromRight 1.2s ease-out forwards;
+  animation: flyFromRight 2.5s ease-out forwards;
 }
 
 @keyframes flyFromLeft {
